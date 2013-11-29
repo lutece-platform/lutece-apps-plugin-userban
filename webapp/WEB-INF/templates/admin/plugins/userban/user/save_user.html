@@ -1,0 +1,32 @@
+<div class="row-fluid">
+	<div class="span12">
+	    <form method="post"  name="save_user" id="save_user" action="jsp/admin/plugins/userban/user/DoSaveUser.jsp">
+			<fieldset>
+				<legend>#i18n{userban.user.save.title}</legend>
+			    ${error!}
+		    	<input type="hidden" id="jsp_back" name="jsp_back" value="${jsp_back!}"/>
+		        
+				<div>
+					<label for="guid" >#i18n{userban.user.field.guid} * :</label>
+					<input type="text" id="guid" name="guid" class="input-large" maxlength="100" value="${(bean.guid)!}"/>
+				</div>
+				<div>
+					<label for="commentaire" >#i18n{userban.user.field.commentaire} * :</label>
+					<input type="text" id="commentaire" name="commentaire" class="input-large" maxlength="100" value="${(bean.commentaire)!}"/>
+				</div>
+			</fieldset>
+			<fieldset>
+				<div class="form-actions pagination-centered">   
+					<button type="submit" name="save" class="btn btn-primary btn-small" tabindex="3" >
+						<i class="icon-ok icon-white">&nbsp;</i>
+						#i18n{userban.transverse.save}
+					</button>
+					<button class="btn btn-small" type="submit" name="cancel">
+						<i class="icon-remove-circle">&nbsp;</i>
+						#i18n{userban.transverse.cancel}
+					</button>
+				</div>
+			</fieldset>
+	   </form>
+	</div>
+</div>

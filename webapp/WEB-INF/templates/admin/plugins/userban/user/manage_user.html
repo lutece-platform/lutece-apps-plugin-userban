@@ -1,0 +1,33 @@
+<#macro columnActionsUser item >
+    <@showButton type="delete" href="jsp/admin/plugins/userban/user/DeleteUser.jsp?user_id=${item.guid}" />
+</#macro>
+
+<div class="row-fluid">
+	<div class="span12">
+		<fieldset>
+			<legend>
+				#i18n{userban.user.manage.title}
+				<span class="pull-right spaced">
+				  	<a class="btn btn-primary btn-small" href="jsp/admin/plugins/userban/user/SaveUser.jsp">	    	
+			     		<i class="icon-plus icon-white" ></i> <span class="hidden-phone">#i18n{userban.user.manage.title}</span>	
+				  	</a>
+				</span>
+			</legend>
+			<div class="row-fluid">
+				<div class="span3 well">
+					<form action="jsp/admin/plugins/userban/user/ManageUser.jsp" method="post">
+						<input type="hidden" name="filter" value="filter" />
+						<p>
+							<label for="guid">#i18n{userban.user.field.guid} :</label>
+							<input class="span"  type="text" value="${(filter.guid)!}" name="guid" id="guid" />
+						</p>
+						<@showSearchButton />
+					</form>
+				</div>
+				<div class="span9">
+					<@dataTable dataTableManager=dataTableUser />
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</div>

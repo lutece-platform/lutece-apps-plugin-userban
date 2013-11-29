@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
+    <!-- Plugin Informations -->
+    <name>userban</name>    
+    <class>fr.paris.lutece.plugins.userban.service.UserbanPlugin</class>
+    <version>1.0.0</version>
+    <documentation/>
+    <installation/>
+    <changes/>
+    <user-guide/>
+    <description>userban.plugin.description</description>
+    <provider>userban.plugin.provider</provider>
+    <provider-url>http://lutece.paris.fr</provider-url>
+    <icon-url>images/admin/skin/plugins/userban/userban.png</icon-url>
+    <copyright>Copyright 2002-2013 Mairie de Paris</copyright>
+    <db-pool-required>1</db-pool-required>
+    
+    <freemarker-macro-files>
+		<freemarker-macro-file>/commons_userban.html
+		</freemarker-macro-file>
+	</freemarker-macro-files>
+    
+    <!--  Specific plugin CSS stylesheet   --> 
+    <css-stylesheets>
+    </css-stylesheets>
+    
+    <!--  Specific plugin JAVASCRIPT   --> 
+    <javascript-files>
+    </javascript-files>
+    
+    <!-- Administration interface parameters -->
+    <admin-features>
+    		<admin-feature>
+				<feature-id>USERBAN_USER_MANAGEMENT</feature-id>
+				<feature-title>userban.adminFeature.usersManagement.name</feature-title>
+				<feature-description>userban.adminFeature.usersManagement.description</feature-description>
+				<feature-level>3</feature-level>
+				<feature-url>jsp/admin/plugins/userban/user/ManageUser.jsp</feature-url>
+				<feature-group>BILLETTERIE</feature-group>
+				<feature-icon-url>images/admin/skin/features/manage_users.png</feature-icon-url>
+			</admin-feature>
+    </admin-features>    
+    
+	<!-- Applications -->
+	<applications>
+    </applications>
+    
+    <!-- Daemons -->
+    
+    <!-- RBAC Resources -->
+    <rbac-resource-types>   	
+   </rbac-resource-types>
+</plug-in>
