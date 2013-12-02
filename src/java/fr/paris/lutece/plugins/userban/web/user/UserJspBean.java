@@ -90,14 +90,13 @@ public class UserJspBean extends AbstractJspBean
     private static final String MARK_USER_ID = "user_id";
     private static final String MARK_DATA_TABLE_USER = "dataTableUser";
 
-    private IUserService<String, User> _serviceUser;
+    private IUserService _serviceUser;
 
-    @SuppressWarnings( "unchecked" )
     @Override
     public void init( HttpServletRequest request, String strRight ) throws AccessDeniedException
     {
         super.init( request, strRight );
-        _serviceUser = (IUserService<String, User>) SpringContextService.getBean( BEAN_USER_SERVICE );
+        _serviceUser = (IUserService) SpringContextService.getBean( BEAN_USER_SERVICE );
     }
 
     /**
@@ -114,6 +113,7 @@ public class UserJspBean extends AbstractJspBean
         dataTableUser.addColumn( "userban.user.field.guid", "guid", false );
         dataTableUser.addColumn( "userban.user.field.date", "date?date", false );
         dataTableUser.addColumn( "userban.user.field.commentaire", "commentaire", false );
+        dataTableUser.addColumn( "userban.user.field.motif", "motif", false );
         dataTableUser.addFreeColumn( "userban.transverse.label.actions", MACRO_COLUMN_ACTIONS_USER );
 
         UserFilter filter = new UserFilter( );

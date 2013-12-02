@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS userban_user (
 		state varchar(255),
 		date timestamp,
 		commentaire varchar(255),
+		motif varchar(255),
 	PRIMARY KEY  (guid)
-) COMMENT='Contient les users';
+) COMMENT='Contient les banissement d''utilisateurs';

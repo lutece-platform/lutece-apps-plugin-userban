@@ -48,5 +48,6 @@ public class User_ {
 	public static volatile SingularAttribute<User, String> _guid;
 	public static volatile SingularAttribute<User, Date> _date;
 	public static volatile SingularAttribute<User, String> _commentaire;
+	public static volatile SingularAttribute<User, String> _motif;
 
 }

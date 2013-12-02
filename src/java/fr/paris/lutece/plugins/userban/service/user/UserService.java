@@ -39,8 +39,8 @@ import javax.inject.Named;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import fr.paris.lutece.plugins.userban.bean.AbstractFilter;
 import fr.paris.lutece.plugins.userban.bean.user.User;
-import fr.paris.lutece.plugins.userban.bean.user.UserFilter;
 import fr.paris.lutece.plugins.userban.dao.commons.PaginationProperties;
 import fr.paris.lutece.plugins.userban.dao.commons.ResultList;
 import fr.paris.lutece.plugins.userban.dao.user.UserDAO;
@@ -51,7 +51,7 @@ import fr.paris.lutece.plugins.userban.service.AbstractService;
  * The User class service
  * @author jchaline
  */
-public class UserService extends AbstractService<String, User> implements IUserService<String, User>
+public class UserService extends AbstractService<String, User> implements IUserService
 {
     public static final Logger LOGGER = Logger.getLogger( UserService.class );
 
@@ -60,13 +60,20 @@ public class UserService extends AbstractService<String, User> implements IUserS
     private UserDAO _daoUser;
 
     @Override
+    public User findByPrimaryKey( String key )
+    {
+        User bean = _daoUser.findById( key );
+        return bean;
+    }
+
+    @Override
     public ResultList<User> findAll( PaginationProperties paginationProperties )
     {
         return _daoUser.findAll( paginationProperties );
     }
 
     @Override
-    public ResultList<User> find( UserFilter filter, PaginationProperties paginationProperties )
+    public ResultList<User> find( AbstractFilter filter, PaginationProperties paginationProperties )
     {
         return _daoUser.find( filter, User.class, paginationProperties );
     }

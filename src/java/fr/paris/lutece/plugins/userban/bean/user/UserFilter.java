@@ -37,44 +37,99 @@ import java.util.Date;
 
 import fr.paris.lutece.plugins.userban.bean.AbstractFilter;
 
+
 /**
  * The User class for filter
  * @author jchaline
  */
-public class UserFilter extends AbstractFilter {
+public class UserFilter extends AbstractFilter
+{
 
-		private	String _state;
-		private	String _guid;
-		private	Date _date;
-		private	String _commentaire;
-	
-	public void setState(String state){
-		this._state = state;
-	}
+    private static final long serialVersionUID = -3554777257603912111L;
+    private String _state;
+    private String _guid;
+    private Date _date;
+    private String _commentaire;
+    private String _motif;
 
-	public String getState(){
-		return this._state;
-	}
-	public void setGuid(String guid){
-		this._guid = guid;
-	}
+    /**
+     * @return the commentaire
+     */
+    public String getCommentaire( )
+    {
+        return _commentaire;
+    }
 
-	public String getGuid(){
-		return this._guid;
-	}
-	public void setDate(Date date){
-		this._date = date;
-	}
+    /**
+     * @param commentaire the commentaire to set
+     */
+    public void setCommentaire( String commentaire )
+    {
+        this._commentaire = commentaire;
+    }
 
-	public Date getDate(){
-		return this._date;
-	}
-	public void setCommentaire(String commentaire){
-		this._commentaire = commentaire;
-	}
+    /**
+     * @return the state
+     */
+    public String getState( )
+    {
+        return _state;
+    }
 
-	public String getCommentaire(){
-		return this._commentaire;
-	}
+    /**
+     * @param state the state to set
+     */
+    public void setState( String state )
+    {
+        this._state = state;
+    }
+
+    /**
+     * @return the date
+     */
+    public Date getDate( )
+    {
+        return _date;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate( Date date )
+    {
+        this._date = date;
+    }
+
+    /**
+     * @return the motif
+     */
+    public String getMotif( )
+    {
+        return _motif;
+    }
+
+    /**
+     * @param motif the motif to set
+     */
+    public void setMotif( String motif )
+    {
+        this._motif = motif;
+    }
+
+    /**
+     * @return the guid
+     */
+    public String getGuid( )
+    {
+        return _guid;
+    }
+
+    /**
+     * @param guid the guid to set
+     */
+    public void setGuid( String guid )
+    {
+        this._guid = guid;
+    }
 
 }

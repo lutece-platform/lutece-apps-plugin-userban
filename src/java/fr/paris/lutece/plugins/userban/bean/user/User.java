@@ -51,6 +51,8 @@ import fr.paris.lutece.plugins.userban.bean.AbstractBean;
 @Table( name = "userban_user" )
 public class User extends AbstractBean<String>
 {
+    private static final long serialVersionUID = 1L;
+
     @Column( name = "state" )
     private String _state;
 
@@ -63,6 +65,9 @@ public class User extends AbstractBean<String>
 
     @Column( name = "commentaire" )
     private String _commentaire;
+    
+    @Column( name = "motif" )
+    private String _motif;
 
     /**
      * the state setter
@@ -146,5 +151,22 @@ public class User extends AbstractBean<String>
     public void setId( String id )
     {
         this._guid = id;
+    }
+
+    /**
+     * @return the motif
+     */
+    public String getMotif( )
+    {
+        return _motif;
+    }
+
+
+    /**
+     * @param motif the motif to set
+     */
+    public void setMotif( String motif )
+    {
+        this._motif = motif;
     }
 }

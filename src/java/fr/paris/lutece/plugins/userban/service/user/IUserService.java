@@ -35,9 +35,8 @@ package fr.paris.lutece.plugins.userban.service.user;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.paris.lutece.plugins.userban.bean.user.UserFilter;
-import fr.paris.lutece.plugins.userban.dao.commons.PaginationProperties;
-import fr.paris.lutece.plugins.userban.dao.commons.ResultList;
+import fr.paris.lutece.plugins.userban.bean.user.User;
+import fr.paris.lutece.plugins.userban.service.IAbstractService;
 
 
 /**
@@ -47,41 +46,13 @@ import fr.paris.lutece.plugins.userban.dao.commons.ResultList;
  * @author jchaline
  */
 @Transactional
-public interface IUserService<K, E>
+public interface IUserService extends IAbstractService<String,User>
 {
-
     /**
-     * Create or update user in database
-     * @param bean the bean to save
-     */
-    void doSaveBean( E bean );
-
-    /**
-     * Delete user in database
-     * @param bean the bean to delete
-     */
-    void doDeleteBean( K bean );
-
-    /**
-     * Get all the bean from dao
-     * @param paginationProperties the pagination properties
-     * @return the bean list
-     */
-    abstract ResultList<E> findAll( PaginationProperties paginationProperties );
-
-    /**
-     * Get all the bean matching the filter from dao
-     * @param filter the filter
-     * @param paginationProperties the pagination properties
-     * @return the bean list
-     */
-    abstract ResultList<E> find( UserFilter filter, PaginationProperties paginationProperties );
-
-    /**
-     * 
-     * @param guid
-     * @param state
-     * @return
+     * Find if user guid match with state given
+     * @param guid the guid of the user
+     * @param state the state of the user
+     * @return true if state exist for user, false otherwise
      */
     boolean userMatchState( String guid, String state );
 
