@@ -49,4 +49,9 @@
 			</plugin>
 		</plugins>
 	</build>
+	<scm>
+		<connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/applications/plugin-userban</connection>
+		<developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/applications/plugin-userban</developerConnection>
+		<url>http://dev.lutece.paris.fr/viewvc/lutece/portal/trunk/plugins/applications/plugin-userban</url>
+	</scm>
 </project>
