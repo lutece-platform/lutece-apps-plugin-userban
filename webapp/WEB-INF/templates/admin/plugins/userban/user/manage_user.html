@@ -1,5 +1,5 @@
 <#macro columnActionsUser item >
-    <@showButton type="delete" href="jsp/admin/plugins/userban/user/DeleteUser.jsp?user_id=${item.guid}" />
+    <@showButton type="delete" href="jsp/admin/plugins/userban/user/DeleteUser.jsp?user_id=${item.id}" />
 </#macro>
 
 <div class="row-fluid">
@@ -18,8 +18,8 @@
 					<form action="jsp/admin/plugins/userban/user/ManageUser.jsp" method="post">
 						<input type="hidden" name="filter" value="filter" />
 						<p>
-							<label for="guid">#i18n{userban.user.field.guid} :</label>
-							<input class="span"  type="text" value="${(filter.guid)!}" name="guid" id="guid" />
+							<label for="id">#i18n{userban.user.field.id} :</label>
+							<input class="span"  type="text" value="${(filter.id)!}" name="id" id="id" />
 						</p>
 						<@showSearchButton />
 					</form>

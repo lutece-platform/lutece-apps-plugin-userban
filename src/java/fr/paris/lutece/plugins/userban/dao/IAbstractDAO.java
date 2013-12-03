@@ -64,5 +64,5 @@ public interface IAbstractDAO<K, E>
      * @param paginationProperties the pagination properties
      * @return List of entities found.
      */
-    ResultList<E> find( AbstractFilter filter, Class<E> type, PaginationProperties paginationProperties );
+    ResultList<E> find( AbstractFilter<K> filter, Class<E> type, PaginationProperties paginationProperties );
 }

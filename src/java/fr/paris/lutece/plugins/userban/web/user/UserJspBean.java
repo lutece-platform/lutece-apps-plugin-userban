@@ -110,7 +110,7 @@ public class UserJspBean extends AbstractJspBean
         Map<String, Object> model = super.getManageBeansModel( request );
 
         DataTableManager<User> dataTableUser = new DataTableManager<User>( JSP_MANAGE_USER, "", 10, true );
-        dataTableUser.addColumn( "userban.user.field.guid", "guid", false );
+        dataTableUser.addColumn( "userban.user.field.id", "id", false );
         dataTableUser.addColumn( "userban.user.field.date", "date?date", false );
         dataTableUser.addColumn( "userban.user.field.commentaire", "commentaire", false );
         dataTableUser.addColumn( "userban.user.field.motif", "motif", false );
@@ -122,6 +122,7 @@ public class UserJspBean extends AbstractJspBean
 
         dataTableUser.filterSortAndPaginate( request, listUsers );
         model.put( MARK_DATA_TABLE_USER, dataTableUser );
+        model.put( MARK_FILTER, filter );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MANAGE_USER, getLocale( ), model );
 

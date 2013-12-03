@@ -62,11 +62,12 @@ public class AbstractJspBean extends PluginAdminPageJspBean
     
     protected int _nItemsPerPage;
     protected final static String MARK_BUTTON_CANCEL = "cancel";
+    protected static final String MARK_JSP_BACK = "jsp_back";
+    protected static final String MARK_FILTER = "filter";
 
     private String _strCurrentPageIndex = StringUtils.EMPTY;
     private static final long serialVersionUID = 8195930894349438376L;
 
-    private static final String MARK_JSP_BACK = "jsp_back";
 
     /**
      * Return a paginator for the view using parameter in http request.

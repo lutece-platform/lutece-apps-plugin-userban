@@ -72,7 +72,7 @@ public abstract class AbstractDAO<K, E> extends JPALuteceDAO<K, E> implements IA
      * @param query the criteria query
      * @param builder the criteria builder
      */
-    protected void buildCriteriaQuery( AbstractFilter filter, Root<E> root, CriteriaQuery<E> query,
+    protected void buildCriteriaQuery( AbstractFilter<K> filter, Root<E> root, CriteriaQuery<E> query,
         CriteriaBuilder builder )
     {
         LOGGER.debug( "use abstract" );
@@ -160,7 +160,7 @@ public abstract class AbstractDAO<K, E> extends JPALuteceDAO<K, E> implements IA
      * @param query the criteria query
      * @param builder the criteria builder
      */
-    protected void buildSortQuery( AbstractFilter filter, Root<E> root, CriteriaQuery<E> query, CriteriaBuilder builder )
+    protected void buildSortQuery( AbstractFilter<K> filter, Root<E> root, CriteriaQuery<E> query, CriteriaBuilder builder )
     {
         if ( filter.getOrders( ) != null && !filter.getOrders( ).isEmpty( ) )
         {
@@ -192,7 +192,7 @@ public abstract class AbstractDAO<K, E> extends JPALuteceDAO<K, E> implements IA
      * fr.paris.lutece.plugins.generic.dao.commons.PaginationProperties)
      */
     @Override
-    public ResultList<E> find( AbstractFilter filter, Class<E> type, PaginationProperties paginationProperties )
+    public ResultList<E> find( AbstractFilter<K> filter, Class<E> type, PaginationProperties paginationProperties )
     {
         EntityManager em = getEM( );
         CriteriaBuilder cb = em.getCriteriaBuilder( );

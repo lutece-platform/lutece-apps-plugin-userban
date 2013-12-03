@@ -57,8 +57,8 @@ public class User extends AbstractBean<String>
     private String _state;
 
     @Id
-    @Column( name = "guid" )
-    private String _guid;
+    @Column( name = "id" )
+    private String _id;
 
     @Column( name = "date" )
     private Date _date;
@@ -85,24 +85,6 @@ public class User extends AbstractBean<String>
     public String getState( )
     {
         return this._state;
-    }
-
-    /**
-     * the guid setter
-     * @param guid the guid to set
-     */
-    public void setGuid( String guid )
-    {
-        this._guid = guid;
-    }
-
-    /**
-     * the guid getter
-     * @return guid
-     */
-    public String getGuid( )
-    {
-        return this._guid;
     }
 
     /**
@@ -144,13 +126,13 @@ public class User extends AbstractBean<String>
     @Override
     public String getId( )
     {
-        return _guid;
+        return _id;
     }
 
     @Override
     public void setId( String id )
     {
-        this._guid = id;
+        this._id = id;
     }
 
     /**

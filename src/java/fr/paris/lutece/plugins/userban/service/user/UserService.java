@@ -60,9 +60,9 @@ public class UserService extends AbstractService<String, User> implements IUserS
     private UserDAO _daoUser;
 
     @Override
-    public User findByPrimaryKey( String key )
+    public User findByPrimaryKey( String id )
     {
-        User bean = _daoUser.findById( key );
+        User bean = _daoUser.findById( id );
         return bean;
     }
 
@@ -81,7 +81,7 @@ public class UserService extends AbstractService<String, User> implements IUserS
     @Override
     public void doSaveBean( User bean )
     {
-        User existingBean = _daoUser.findById( bean.getGuid( ) );
+        User existingBean = _daoUser.findById( bean.getId( ) );
         if ( existingBean != null )
         {
             _daoUser.update( bean );
@@ -93,23 +93,23 @@ public class UserService extends AbstractService<String, User> implements IUserS
     }
 
     @Override
-    public void doDeleteBean( String strIdBean )
+    public void doDeleteBean( String id )
     {
-        User existingBean = _daoUser.findById( strIdBean );
+        User existingBean = _daoUser.findById( id );
         if ( existingBean != null )
         {
-            _daoUser.remove( strIdBean );
+            _daoUser.remove( id );
         }
     }
 
     @Override
-    public boolean userMatchState( String guid, String state )
+    public boolean userMatchState( String id, String state )
     {
         boolean match = false;
 
         if ( StringUtils.isNotBlank( state ) )
         {
-            User existingBean = _daoUser.findById( guid );
+            User existingBean = _daoUser.findById( id );
 
             if ( existingBean != null )
             {

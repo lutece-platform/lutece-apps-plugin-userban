@@ -39,8 +39,9 @@ import java.util.List;
 
 /**
  * The abstract class for filter
+ * @param <K> the primary key
  */
-public abstract class AbstractFilter implements Serializable
+public abstract class AbstractFilter<K> implements Serializable
 {
 
     private static final long serialVersionUID = -2029442617417680733L;
@@ -49,7 +50,7 @@ public abstract class AbstractFilter implements Serializable
 
     private List<String> _orders;
 
-    private Integer _id;
+    private K _id;
 
     /**
      * @return the orderAsc
@@ -86,7 +87,7 @@ public abstract class AbstractFilter implements Serializable
     /**
      * @return the id
      */
-    public Integer getId( )
+    public K getId( )
     {
         return _id;
     }
@@ -94,7 +95,7 @@ public abstract class AbstractFilter implements Serializable
     /**
      * @param id the id to set
      */
-    public void setId( Integer id )
+    public void setId( K id )
     {
         this._id = id;
     }

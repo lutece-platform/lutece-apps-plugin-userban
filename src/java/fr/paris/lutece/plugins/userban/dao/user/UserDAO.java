@@ -60,17 +60,17 @@ public class UserDAO extends AbstractDAO<String, User> implements IUserDAO<Strin
     public static final String PLUGIN_NAME = "userban";
 
     @Override
-    protected void buildCriteriaQuery( AbstractFilter abstractFilter, Root<User> root, CriteriaQuery<User> query,
+    protected void buildCriteriaQuery( AbstractFilter<String> abstractFilter, Root<User> root, CriteriaQuery<User> query,
             CriteriaBuilder builder )
     {
         super.buildCriteriaQuery( abstractFilter, root, query, builder );
         UserFilter trueFilter = (UserFilter) abstractFilter;
         List<Predicate> listPredicates = new ArrayList<Predicate>( );
 
-        if ( StringUtils.isNotBlank( trueFilter.getGuid( ) ) )
+        if ( StringUtils.isNotBlank( trueFilter.getId( ) ) )
         {
             listPredicates
-                    .add( builder.like( root.get( User_._guid ), buildCriteriaLikeString( trueFilter.getGuid( ) ) ) );
+                    .add( builder.like( root.get( User_._id ), buildCriteriaLikeString( trueFilter.getId( ) ) ) );
         }
 
         if ( !listPredicates.isEmpty( ) )

@@ -50,10 +50,10 @@ public interface IUserService extends IAbstractService<String,User>
 {
     /**
      * Find if user guid match with state given
-     * @param guid the guid of the user
+     * @param id the id of the user
      * @param state the state of the user
      * @return true if state exist for user, false otherwise
      */
-    boolean userMatchState( String guid, String state );
+    boolean userMatchState( String id, String state );
 
 }

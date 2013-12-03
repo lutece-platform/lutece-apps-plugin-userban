@@ -42,12 +42,12 @@ import fr.paris.lutece.plugins.userban.bean.AbstractFilter;
  * The User class for filter
  * @author jchaline
  */
-public class UserFilter extends AbstractFilter
+public class UserFilter extends AbstractFilter<String>
 {
 
     private static final long serialVersionUID = -3554777257603912111L;
     private String _state;
-    private String _guid;
+    private String _id;
     private Date _date;
     private String _commentaire;
     private String _motif;
@@ -119,17 +119,17 @@ public class UserFilter extends AbstractFilter
     /**
      * @return the guid
      */
-    public String getGuid( )
+    public String getId( )
     {
-        return _guid;
+        return _id;
     }
 
     /**
-     * @param guid the guid to set
+     * @param id the guid to set
      */
-    public void setGuid( String guid )
+    public void setId( String id )
     {
-        this._guid = guid;
+        this._id = id;
     }
 
 }
