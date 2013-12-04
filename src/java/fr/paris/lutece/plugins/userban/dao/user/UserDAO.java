@@ -54,7 +54,7 @@ import fr.paris.lutece.plugins.userban.dao.AbstractDAO;
  * The User DAO class
  * @author jchaline
  */
-public class UserDAO extends AbstractDAO<String, User> implements IUserDAO<String, User>
+public class UserDAO extends AbstractDAO<String, User> implements IUserDAO
 {
 
     public static final String PLUGIN_NAME = "userban";
@@ -70,7 +70,7 @@ public class UserDAO extends AbstractDAO<String, User> implements IUserDAO<Strin
         if ( StringUtils.isNotBlank( trueFilter.getId( ) ) )
         {
             listPredicates
-                    .add( builder.like( root.get( User_._id ), buildCriteriaLikeString( trueFilter.getId( ) ) ) );
+                    .add( builder.like( root.get( User_._strId ), buildCriteriaLikeString( trueFilter.getId( ) ) ) );
         }
 
         if ( !listPredicates.isEmpty( ) )

@@ -57,7 +57,7 @@ public class User extends AbstractBean<String>
     private static final long serialVersionUID = 1L;
 
     @Column( name = "state" )
-    private String _state;
+    private String _strState;
 
     @Id
     @Column( name = "id" )
@@ -81,7 +81,7 @@ public class User extends AbstractBean<String>
      */
     public void setState( String state )
     {
-        this._state = state;
+        this._strState = state;
     }
 
     /**
@@ -90,7 +90,7 @@ public class User extends AbstractBean<String>
      */
     public String getState( )
     {
-        return this._state;
+        return this._strState;
     }
 
     /**

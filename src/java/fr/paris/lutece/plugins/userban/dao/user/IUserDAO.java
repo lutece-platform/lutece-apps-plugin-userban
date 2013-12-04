@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.userban.dao.user;
 
+import fr.paris.lutece.plugins.userban.bean.user.User;
 import fr.paris.lutece.plugins.userban.dao.IAbstractDAO;
 
 
@@ -42,7 +43,7 @@ import fr.paris.lutece.plugins.userban.dao.IAbstractDAO;
  * @param <E> the bean
  * @author jchaline
  */
-public interface IUserDAO<K, E> extends IAbstractDAO<K, E>
+public interface IUserDAO extends IAbstractDAO<String, User>
 {
 
 }

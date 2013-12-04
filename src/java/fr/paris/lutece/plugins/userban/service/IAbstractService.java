@@ -33,11 +33,12 @@
  */
 package fr.paris.lutece.plugins.userban.service;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.paris.lutece.plugins.userban.bean.AbstractFilter;
 import fr.paris.lutece.plugins.userban.dao.commons.PaginationProperties;
-import fr.paris.lutece.plugins.userban.dao.commons.ResultList;
 
 
 /**
@@ -74,7 +75,7 @@ public interface IAbstractService<K, E>
      * @param paginationProperties the pagination properties
      * @return the bean list
      */
-    abstract ResultList<E> findAll( PaginationProperties paginationProperties );
+    abstract List<E> findAll( PaginationProperties paginationProperties );
 
     /**
      * Get all the bean matching the filter from dao
@@ -82,5 +83,5 @@ public interface IAbstractService<K, E>
      * @param paginationProperties the pagination properties
      * @return the bean list
      */
-    abstract ResultList<E> find( AbstractFilter filter, PaginationProperties paginationProperties );
+    abstract List<E> find( AbstractFilter<K> filter, PaginationProperties paginationProperties );
 }

@@ -36,17 +36,16 @@ package fr.paris.lutece.plugins.userban.dao;
 import fr.paris.lutece.plugins.userban.bean.AbstractFilter;
 import fr.paris.lutece.plugins.userban.dao.commons.PaginationProperties;
 import fr.paris.lutece.plugins.userban.dao.commons.ResultList;
+import fr.paris.lutece.util.jpa.IGenericDAO;
 
 
 /**
  * The interface class for abstract DAO
  * 
- * @param <K>
- *            the class for entity Key
- * @param <E>
- *            the entity class
+ * @param <K> the class for entity Key
+ * @param <E> the entity class
  */
-public interface IAbstractDAO<K, E>
+public interface IAbstractDAO<K, E> extends IGenericDAO<K, E>
 {
 
     /**

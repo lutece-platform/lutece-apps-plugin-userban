@@ -39,11 +39,9 @@ import javax.inject.Named;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import fr.paris.lutece.plugins.userban.bean.AbstractFilter;
 import fr.paris.lutece.plugins.userban.bean.user.User;
-import fr.paris.lutece.plugins.userban.dao.commons.PaginationProperties;
-import fr.paris.lutece.plugins.userban.dao.commons.ResultList;
-import fr.paris.lutece.plugins.userban.dao.user.UserDAO;
+import fr.paris.lutece.plugins.userban.dao.IAbstractDAO;
+import fr.paris.lutece.plugins.userban.dao.user.IUserDAO;
 import fr.paris.lutece.plugins.userban.service.AbstractService;
 
 
@@ -57,49 +55,18 @@ public class UserService extends AbstractService<String, User> implements IUserS
 
     @Inject
     @Named( "userban.userDAO" )
-    private UserDAO _daoUser;
+    private IUserDAO _daoUser;
 
     @Override
-    public User findByPrimaryKey( String id )
+    protected IAbstractDAO<String,User> getDAO( )
     {
-        User bean = _daoUser.findById( id );
-        return bean;
+        return _daoUser;
     }
 
     @Override
-    public ResultList<User> findAll( PaginationProperties paginationProperties )
+    protected Class<User> getBeanClass( )
     {
-        return _daoUser.findAll( paginationProperties );
-    }
-
-    @Override
-    public ResultList<User> find( AbstractFilter filter, PaginationProperties paginationProperties )
-    {
-        return _daoUser.find( filter, User.class, paginationProperties );
-    }
-
-    @Override
-    public void doSaveBean( User bean )
-    {
-        User existingBean = _daoUser.findById( bean.getId( ) );
-        if ( existingBean != null )
-        {
-            _daoUser.update( bean );
-        }
-        else
-        {
-            _daoUser.create( bean );
-        }
-    }
-
-    @Override
-    public void doDeleteBean( String id )
-    {
-        User existingBean = _daoUser.findById( id );
-        if ( existingBean != null )
-        {
-            _daoUser.remove( id );
-        }
+        return User.class;
     }
 
     @Override

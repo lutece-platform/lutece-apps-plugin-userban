@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.userban.web.user;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,6 @@ import org.apache.log4j.Logger;
 
 import fr.paris.lutece.plugins.userban.bean.user.User;
 import fr.paris.lutece.plugins.userban.bean.user.UserFilter;
-import fr.paris.lutece.plugins.userban.dao.commons.ResultList;
 import fr.paris.lutece.plugins.userban.service.user.IUserService;
 import fr.paris.lutece.plugins.userban.web.AbstractJspBean;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
@@ -64,6 +64,7 @@ import fr.paris.lutece.util.html.HtmlTemplate;
  */
 public class UserJspBean extends AbstractJspBean
 {
+
     public static final Logger LOGGER = Logger.getLogger( UserJspBean.class );
 
     public static final String RIGHT_MANAGE_USER = "USERBAN_USER_MANAGEMENT";
@@ -78,6 +79,7 @@ public class UserJspBean extends AbstractJspBean
 
     private static final String MACRO_COLUMN_ACTIONS_USER = "columnActionsUser";
 
+    private static final String MARK_USER_JPA_FIELD_ID = "_strId";
     private static final String MARK_DATA_TABLE = "dataTable";
 
     private static final String TEMPLATE_MANAGE_USER = "admin/plugins/userban/user/manage_user.html";
@@ -97,12 +99,15 @@ public class UserJspBean extends AbstractJspBean
     private static final String MARK_DATA_TABLE_USER = "dataTableUser";
 
     private IUserService _serviceUser;
+    private List<String> defaultOrder;
 
     @Override
     public void init( HttpServletRequest request, String strRight ) throws AccessDeniedException
     {
         super.init( request, strRight );
         _serviceUser = (IUserService) SpringContextService.getBean( BEAN_USER_SERVICE );
+        defaultOrder = new ArrayList<String>();
+        defaultOrder.add( MARK_USER_JPA_FIELD_ID );
     }
 
     /**
@@ -131,8 +136,10 @@ public class UserJspBean extends AbstractJspBean
 
         UserFilter userFilter = new UserFilter( );
         populate( userFilter, request );
+        userFilter.setOrderAsc( true );
+        userFilter.setOrders( defaultOrder );
 
-        ResultList<User> listUsers = _serviceUser.find( userFilter, null );
+        List<User> listUsers = _serviceUser.find( userFilter, null );
         dataTableUser.filterSortAndPaginate( request, listUsers );
         model.put( MARK_DATA_TABLE_USER, dataTableUser );
         model.put( MARK_FILTER, userFilter );

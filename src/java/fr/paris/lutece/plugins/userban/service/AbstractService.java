@@ -33,6 +33,13 @@
  */
 package fr.paris.lutece.plugins.userban.service;
 
+import java.util.List;
+
+import fr.paris.lutece.plugins.userban.bean.AbstractBean;
+import fr.paris.lutece.plugins.userban.bean.AbstractFilter;
+import fr.paris.lutece.plugins.userban.dao.IAbstractDAO;
+import fr.paris.lutece.plugins.userban.dao.commons.PaginationProperties;
+
 
 
 
@@ -41,8 +48,61 @@ package fr.paris.lutece.plugins.userban.service;
  * @param <K> the bean primary key
  * @param <E> the bean class
  */
-public abstract class AbstractService<K, E>
+public abstract class AbstractService<K, E extends AbstractBean<K>> implements IAbstractService<K,E>
 {
+    /**
+     * Get the bean dao
+     * @return the dao
+     */
+    protected abstract IAbstractDAO<K,E> getDAO( );
+
+    /**
+     * Get the class type of the bean
+     * @return the class type
+     */
+    protected abstract Class<E> getBeanClass();
     
+    @Override
+    public E findByPrimaryKey( K id )
+    {
+        E bean = getDAO().findById( id );
+        return bean;
+    }
+
+    @Override
+    public List<E> findAll( PaginationProperties paginationProperties )
+    {
+        return getDAO().findAll( paginationProperties );
+    }
+
+    @Override
+    public List<E> find( AbstractFilter<K> filter, PaginationProperties paginationProperties )
+    {
+        return getDAO( ).find( filter, getBeanClass(), paginationProperties );
+    }
+
+    @Override
+    public void doSaveBean( E bean )
+    {
+        E existingBean = getDAO().findById( bean.getId( ) );
+        if ( existingBean != null )
+        {
+            getDAO( ).update( bean );
+        }
+        else
+        {
+            getDAO( ).create( bean );
+        }
+    }
+
+    @Override
+    public void doDeleteBean( K id )
+    {
+        E existingBean = getDAO( ).findById( id );
+        if ( existingBean != null )
+        {
+            getDAO( ).remove( id );
+        }
+    }
 
 }

@@ -44,10 +44,9 @@ import java.util.Date;
 @StaticMetamodel( User.class )
 public class User_ {
 
-	public static volatile SingularAttribute<User, String> _state;
-	public static volatile SingularAttribute<User, String> _id;
+	public static volatile SingularAttribute<User, String> _strState;
+	public static volatile SingularAttribute<User, String> _strId;
 	public static volatile SingularAttribute<User, Date> _date;
-	public static volatile SingularAttribute<User, String> _commentaire;
-	public static volatile SingularAttribute<User, String> _motif;
-
+	public static volatile SingularAttribute<User, String> _strCommentaire;
+	public static volatile SingularAttribute<User, String> _strMotif;
 }
