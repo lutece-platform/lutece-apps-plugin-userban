@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.userban.web.user;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +52,8 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.web.constants.Messages;
+import fr.paris.lutece.util.beanvalidation.ValidationError;
 import fr.paris.lutece.util.datatable.DataTableManager;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
@@ -75,6 +78,8 @@ public class UserJspBean extends AbstractJspBean
 
     private static final String MACRO_COLUMN_ACTIONS_USER = "columnActionsUser";
 
+    private static final String MARK_DATA_TABLE = "dataTable";
+
     private static final String TEMPLATE_MANAGE_USER = "admin/plugins/userban/user/manage_user.html";
     private static final String TEMPLATE_SAVE_USER = "admin/plugins/userban/user/save_user.html";
 
@@ -86,6 +91,7 @@ public class UserJspBean extends AbstractJspBean
      * methods of userban
      */
     private static final String PARAMETER_STATE_BAN = "ban";
+    private static final String PARAMETER_PREFIX_BEAN_FIELD = "userban.user.field.";
 
     private static final String MARK_USER_ID = "user_id";
     private static final String MARK_DATA_TABLE_USER = "dataTableUser";
@@ -109,22 +115,31 @@ public class UserJspBean extends AbstractJspBean
     {
         Map<String, Object> model = super.getManageBeansModel( request );
 
-        DataTableManager<User> dataTableUser = new DataTableManager<User>( JSP_MANAGE_USER, "", 10, true );
-        dataTableUser.addColumn( "userban.user.field.id", "id", false );
-        dataTableUser.addColumn( "userban.user.field.date", "date?date", false );
-        dataTableUser.addColumn( "userban.user.field.commentaire", "commentaire", false );
-        dataTableUser.addColumn( "userban.user.field.motif", "motif", false );
-        dataTableUser.addFreeColumn( "userban.transverse.label.actions", MACRO_COLUMN_ACTIONS_USER );
+        @SuppressWarnings( "unchecked" )
+        DataTableManager<User> dataTableFromSession = (DataTableManager<User>) request.getSession( ).getAttribute(
+                MARK_DATA_TABLE );
+        DataTableManager<User> dataTableUser = dataTableFromSession != null ? dataTableFromSession
+                : new DataTableManager<User>( JSP_MANAGE_USER, "", 10, true );
+        if ( dataTableFromSession == null )
+        {
+            dataTableUser.addColumn( "userban.user.field.id", "id", false );
+            dataTableUser.addColumn( "userban.user.field.date", "date?date", false );
+            dataTableUser.addColumn( "userban.user.field.commentaire", "commentaire", false );
+            dataTableUser.addColumn( "userban.user.field.motif", "motif", false );
+            dataTableUser.addFreeColumn( "userban.transverse.label.actions", MACRO_COLUMN_ACTIONS_USER );
+        }
 
-        UserFilter filter = new UserFilter( );
-        populate( filter, request );
-        ResultList<User> listUsers = _serviceUser.find( filter, getPaginationProperties( request ) );
+        UserFilter userFilter = new UserFilter( );
+        populate( userFilter, request );
 
+        ResultList<User> listUsers = _serviceUser.find( userFilter, null );
         dataTableUser.filterSortAndPaginate( request, listUsers );
         model.put( MARK_DATA_TABLE_USER, dataTableUser );
-        model.put( MARK_FILTER, filter );
+        model.put( MARK_FILTER, userFilter );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MANAGE_USER, getLocale( ), model );
+        dataTableUser.clearItems( );
+        request.getSession( ).setAttribute( MARK_DATA_TABLE, dataTableUser );
 
         return getAdminPage( template.getHtml( ) );
     }
@@ -156,17 +171,25 @@ public class UserJspBean extends AbstractJspBean
         User bean = new User( );
         populate( bean, request );
 
-        //TODO : validate
+        List<ValidationError> errors = validate( bean, PARAMETER_PREFIX_BEAN_FIELD );
+        String urlResult = null;
+        if ( errors.isEmpty( ) )
+        {
+            //force state for moment
+            bean.setState( PARAMETER_STATE_BAN );
 
-        //force state for moment
-        bean.setState( PARAMETER_STATE_BAN );
+            //date is alway the actual date
+            bean.setDate( new Date( ) );
 
-        //date is alway the actual date
-        bean.setDate( new Date( ) );
+            _serviceUser.doSaveBean( bean );
+            urlResult = doGoBack( request, JSP_MANAGE_USER );
+        }
+        else
+        {
+            urlResult = AdminMessageService.getMessageUrl( request, Messages.MESSAGE_INVALID_ENTRY, errors );
+        }
 
-        _serviceUser.doSaveBean( bean );
-
-        return doGoBack( request, JSP_MANAGE_USER );
+        return urlResult;
     }
 
     /**
@@ -183,8 +206,6 @@ public class UserJspBean extends AbstractJspBean
         urlParam.put( MARK_USER_ID, strUserId );
 
         String strJspBack = JSP_MANAGE_USER;
-
-        //TODO : validate errors
 
         return AdminMessageService.getMessageUrl( request, I18N_CONFIRMATION_DELETE_USER, null, I18N_TITLE_DELETE_USER,
                 JSP_DO_DELETE_USER, "_self", AdminMessage.TYPE_CONFIRMATION, urlParam, strJspBack );

@@ -40,6 +40,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import fr.paris.lutece.plugins.userban.bean.AbstractBean;
 
 
@@ -58,16 +61,19 @@ public class User extends AbstractBean<String>
 
     @Id
     @Column( name = "id" )
-    private String _id;
+    @Email
+    @NotEmpty(message = "#i18n{portal.validation.message.notEmpty}")
+    private String _strId;
 
     @Column( name = "date" )
     private Date _date;
 
     @Column( name = "commentaire" )
-    private String _commentaire;
+    private String _strCommentaire;
     
     @Column( name = "motif" )
-    private String _motif;
+    @NotEmpty(message = "#i18n{portal.validation.message.notEmpty}")
+    private String _strMotif;
 
     /**
      * the state setter
@@ -111,7 +117,7 @@ public class User extends AbstractBean<String>
      */
     public void setCommentaire( String commentaire )
     {
-        this._commentaire = commentaire;
+        this._strCommentaire = commentaire;
     }
 
     /**
@@ -120,19 +126,19 @@ public class User extends AbstractBean<String>
      */
     public String getCommentaire( )
     {
-        return this._commentaire;
+        return this._strCommentaire;
     }
 
     @Override
     public String getId( )
     {
-        return _id;
+        return _strId;
     }
 
     @Override
     public void setId( String id )
     {
-        this._id = id;
+        this._strId = id;
     }
 
     /**
@@ -140,7 +146,7 @@ public class User extends AbstractBean<String>
      */
     public String getMotif( )
     {
-        return _motif;
+        return _strMotif;
     }
 
 
@@ -149,6 +155,6 @@ public class User extends AbstractBean<String>
      */
     public void setMotif( String motif )
     {
-        this._motif = motif;
+        this._strMotif = motif;
     }
 }
