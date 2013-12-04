@@ -40,14 +40,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 
-import fr.paris.lutece.plugins.userban.dao.commons.PaginationProperties;
-import fr.paris.lutece.plugins.userban.dao.commons.PaginationPropertiesImpl;
-import fr.paris.lutece.plugins.userban.dao.commons.ResultList;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.web.admin.PluginAdminPageJspBean;
-import fr.paris.lutece.portal.web.util.LocalizedDelegatePaginator;
-import fr.paris.lutece.util.html.DelegatePaginator;
-import fr.paris.lutece.util.html.Paginator;
+import fr.paris.lutece.util.datatable.DataTableManager;
 
 
 /**
@@ -67,48 +62,6 @@ public class AbstractJspBean extends PluginAdminPageJspBean
 
     private String _strCurrentPageIndex = StringUtils.EMPTY;
     private static final long serialVersionUID = 8195930894349438376L;
-
-
-    /**
-     * Return a paginator for the view using parameter in http request.
-     * 
-     * @param <T> the generic type
-     * @param request http request
-     * @param list bean list to paginate
-     * @return paginator
-     */
-    protected <T> DelegatePaginator<T> getPaginator( HttpServletRequest request, ResultList<T> list )
-    {
-
-        _strCurrentPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
-        _nItemsPerPage = Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage,
-                N_DEFAULT_ITEMS_PER_PAGE );
-        String strBaseUrl = request.getRequestURL( ).toString( );
-        LocalizedDelegatePaginator<T> paginator = new LocalizedDelegatePaginator<T>( list, _nItemsPerPage, strBaseUrl,
-                Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, list.getTotalResult( ), getLocale( ) );
-
-        return paginator;
-    }
-
-    /**
-     * Return a bean for pagination in service/dao using parameter in http
-     * request
-     * @param request http request
-     * @return paginator
-     */
-    protected PaginationProperties getPaginationProperties( HttpServletRequest request )
-    {
-        String strPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
-        int nCurrentPageIndex = 1;
-        if ( StringUtils.isNotEmpty( strPageIndex ) )
-        {
-            nCurrentPageIndex = Integer.valueOf( strPageIndex );
-        }
-        int nItemsPerPage = Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage,
-                N_DEFAULT_ITEMS_PER_PAGE );
-
-        return new PaginationPropertiesImpl( ( nCurrentPageIndex - 1 ) * nItemsPerPage, nItemsPerPage );
-    }
 
     /**
      * Get model for manage beans
@@ -145,5 +98,27 @@ public class AbstractJspBean extends PluginAdminPageJspBean
 
         return StringUtils.isNotBlank( strJspBack ) ? ( AppPathService.getBaseUrl( request ) + strJspBack )
                 : AppPathService.getBaseUrl( request ) + JSP_MANAGE_BEAN;
+    }
+    
+    /**
+     * Get the correct filter to use with data table manager
+     * @param request the http request
+     * @param filter the bean filter get with request
+     * @param markFilter the key of the filter
+     * @param dataTable the datatable to use
+     * @param <T> the bean filter type
+     * @return the filter to use
+     */
+    protected <T> T getFilterToUse( HttpServletRequest request, T filter, String markFilter,
+            DataTableManager<?> dataTable )
+    {
+
+        @SuppressWarnings( "unchecked" )
+        T filterFromSession = (T) request.getSession( ).getAttribute( markFilter );
+        //1) est-ce qu'une recherche vient d'être faite ? 2) est-ce qu'un filtre existe en session ? 3) est-ce que le filtre en session est d'un type héritant du fitre fournit en parametre ?
+        T filterToUse = request.getParameter( MARK_FILTER ) != null || filterFromSession == null
+                || !filterFromSession.getClass( ).isAssignableFrom( filter.getClass( ) ) ? dataTable
+                .getAndUpdateFilter( request, filter ) : filterFromSession;
+        return filterToUse;
     }
 }

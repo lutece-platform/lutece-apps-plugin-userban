@@ -42,6 +42,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 
 import fr.paris.lutece.plugins.userban.bean.user.User;
 import fr.paris.lutece.plugins.userban.bean.user.UserFilter;
@@ -138,6 +139,11 @@ public class UserJspBean extends AbstractJspBean
         populate( userFilter, request );
         userFilter.setOrderAsc( true );
         userFilter.setOrders( defaultOrder );
+        
+        //determination de l'utilisation d'un nouveau filtre (recherche) ou de celui présent en session (changement de page)
+        Object filterToUse = getFilterToUse( request, userFilter, MARK_FILTER, dataTableUser );
+        BeanUtils.copyProperties( filterToUse, userFilter );
+        request.getSession( ).setAttribute( MARK_FILTER, filterToUse );
 
         List<User> listUsers = _serviceUser.find( userFilter, null );
         dataTableUser.filterSortAndPaginate( request, listUsers );
