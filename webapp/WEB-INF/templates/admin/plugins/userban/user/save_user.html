@@ -1,26 +1,33 @@
-<div class="row-fluid">
-	<div class="span12">
-	    <form method="post"  name="save_user" id="save_user" action="jsp/admin/plugins/userban/user/DoSaveUser.jsp">
-			<fieldset>
-				<legend>#i18n{userban.user.save.title}</legend>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	    <fieldset>
+		    <form class="form-horizontal"  method="post"  name="save_user" id="save_user" action="jsp/admin/plugins/userban/user/DoSaveUser.jsp">
+		
+			<legend>#i18n{userban.user.save.title}</legend>
 			    ${error!}
 		    	<input type="hidden" id="jsp_back" name="jsp_back" value="${jsp_back!}"/>
 		        
-				<div>
-					<label for="id" >#i18n{userban.user.field.id} * :</label>
-					<input type="text" id="id" name="id" class="input-large" maxlength="100" value="${(bean.id)!}"/>
+			<div class="form-group">
+				<label  class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id" >#i18n{userban.user.field.id} * :</label>
+				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+					<input class="form-control" type="text" id="id" name="id" class="input-large" maxlength="100" value="${(bean.id)!}" />
 				</div>
-				<div>
-					<label for="commentaire" >#i18n{userban.user.field.commentaire} :</label>
-					<input type="text" id="commentaire" name="commentaire" class="input-large" maxlength="100" value="${(bean.commentaire)!}"/>
+			</div>
+			<div class="form-group">
+				<label  class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="commentaire" >#i18n{userban.user.field.commentaire} :</label>
+				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+					<input class="form-control" type="text" id="commentaire" name="commentaire" class="input-large" maxlength="100" value="${(bean.commentaire)!}"/>
 				</div>
-				<div>
-					<label for="motif" >#i18n{userban.user.field.motif} * :</label>
-					<input type="text" id="motif" name="motif" class="input-large" maxlength="100" value="${(bean.motif)!}"/>
-				</div>
-			</fieldset>
-			<fieldset>
-				<div class="form-actions pagination-centered">   
+			</div>
+			<div class="form-group">
+				<label  class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="motif" >#i18n{userban.user.field.motif} * :</label>
+				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+					<input class="form-control" type="text" id="motif" name="motif" class="input-large" maxlength="100" value="${(bean.motif)!}"/>
+				</div>				
+			</div>
+			
+			<div class="form-group">  
+				<div class="col-xs-12 col-sm-12 col-md-offset-3 col-lg-offset-3"> 
 					<button type="submit" name="save" class="btn btn-primary btn-small" tabindex="3" >
 						<i class="icon-ok icon-white">&nbsp;</i>
 						#i18n{userban.transverse.save}
@@ -30,7 +37,10 @@
 						#i18n{userban.transverse.cancel}
 					</button>
 				</div>
-			</fieldset>
-	   </form>
+			</div>
+		
+		   </form>
+	</fieldset>
+			
 	</div>
 </div>

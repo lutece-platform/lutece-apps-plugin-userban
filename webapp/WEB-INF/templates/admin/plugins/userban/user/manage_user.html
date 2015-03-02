@@ -2,8 +2,8 @@
     <@showButton type="delete" href="jsp/admin/plugins/userban/user/DeleteUser.jsp?user_id=${item.id}" />
 </#macro>
 
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<fieldset>
 			<legend>
 				#i18n{userban.user.manage.title}
@@ -13,12 +13,12 @@
 				  	</a>
 				</span>
 			</legend>
-			<div class="row-fluid">
-				<div class="span3 well">
+			<div class="form-group row">
+				<div class="col-xs-12 col-sm-12 col-md-offset-3 col-lg-offset-3 span3 well">
 					<form action="jsp/admin/plugins/userban/user/ManageUser.jsp" method="post">
 						<input type="hidden" name="filter" value="filter" />
 						<p>
-							<label for="id">#i18n{userban.user.field.id} :</label>
+							<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id">#i18n{userban.user.field.id} :</label>
 							<input class="span"  type="text" value="${(filter.id)!}" name="id" id="id" />
 						</p>
 						<@showSearchButton />
